@@ -1,19 +1,30 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateNotificationDto } from './dto/create-notification.dto';
 import { UpdateNotificationDto } from './dto/update-notification.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Notification } from './entities/notification.entity';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class NotificationsService {
+
+  constructor(@InjectRepository(Notification) private readonly noti: Repository<Notification>) {}
+
   create(createNotificationDto: CreateNotificationDto) {
     return 'This action adds a new notification';
   }
 
-  findAll() {
-    return `This action returns all notifications`;
+  async findAll() {
+    const data = await this.noti.find();
+    return data;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} notification`;
+  async findOne(id: number) {
+    const notificatioData = await this.noti.findOne({where:{id}});
+  if (!notificatioData) throw new NotFoundException("numero no valido");
+
+    return notificatioData;
+    
   }
 
   update(id: number, updateNotificationDto: UpdateNotificationDto) {
