@@ -1,9 +1,13 @@
 import { Module } from '@nestjs/common';
-import { TherapeuticContentService } from './therapeutic-content.service';
-import { TherapeuticContentController } from './therapeutic-content.controller';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { ContentService } from './therapeutic-content.service';
+import { ContentController } from './therapeutic-content.controller';
+import { TherapeuticContent } from './entities/therapeutic-content.entity';
 
 @Module({
-  controllers: [TherapeuticContentController],
-  providers: [TherapeuticContentService],
+  imports: [TypeOrmModule.forFeature([TherapeuticContent])],
+  controllers: [ContentController],
+  providers: [ContentService],
+  exports: [ContentService],
 })
-export class TherapeuticContentModule {}
+export class ContentModule {}

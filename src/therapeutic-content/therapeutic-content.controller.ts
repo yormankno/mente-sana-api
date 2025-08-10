@@ -1,34 +1,45 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { TherapeuticContentService } from './therapeutic-content.service';
-import { CreateTherapeuticContentDto } from './dto/create-therapeutic-content.dto';
-import { UpdateTherapeuticContentDto } from './dto/update-therapeutic-content.dto';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put, Query } from '@nestjs/common';
+import { ContentService } from './therapeutic-content.service';
+import { CreateContentDto } from './dto/create-content.dto';
+import { UpdateContentDto } from './dto/update-content.dto';
+import { ListContentDto } from './dto/list-content.dto';
 
-@Controller('therapeutic-content')
-export class TherapeuticContentController {
-  constructor(private readonly therapeuticContentService: TherapeuticContentService) {}
+@Controller('content')
+export class ContentController {
+  constructor(private readonly service: ContentService) {}
 
   @Post()
-  create(@Body() createTherapeuticContentDto: CreateTherapeuticContentDto) {
-    return this.therapeuticContentService.create(createTherapeuticContentDto);
+  create(@Body() dto: CreateContentDto) {
+    return this.service.create(dto);
+  }
+
+  @Post('bulk')
+  bulkCreate(@Body() body: { items: CreateContentDto[] }) {
+    return this.service.bulkCreate(body.items ?? []);
   }
 
   @Get()
-  findAll() {
-    return this.therapeuticContentService.findAll();
+  findAll(@Query() query: ListContentDto) {
+    return this.service.findAll(query);
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.therapeuticContentService.findOne(+id);
+  findOne(@Param('id', ParseIntPipe) id: number) {
+    return this.service.findOne(id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateTherapeuticContentDto: UpdateTherapeuticContentDto) {
-    return this.therapeuticContentService.update(+id, updateTherapeuticContentDto);
+  @Put(':id')
+  update(@Param('id', ParseIntPipe) id: number, @Body() dto: UpdateContentDto) {
+    return this.service.update(id, dto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.therapeuticContentService.remove(+id);
+  remove(@Param('id', ParseIntPipe) id: number) {
+    return this.service.remove(id);
+  }
+
+  @Get(':id/related')
+  related(@Param('id', ParseIntPipe) id: number) {
+    return this.service.related(id);
   }
 }
