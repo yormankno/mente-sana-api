@@ -7,6 +7,7 @@ import { User } from '../users/entities/user.entity';
 import { CreateEvaluationDto } from './dto/create-evaluation.dto';
 import { UpdateEvaluationDto } from './dto/update-evaluation.dto';
 import { ListEvaluationsDto } from './dto/list-evaluations.dto';
+import { EvaluationsBase } from './entities/evaluations_base.entity';
 
 /** Helpers de scoring **/
 function normalizeAnswerToNumber(a?: string | number): number {
@@ -27,24 +28,24 @@ function normalizeAnswerToNumber(a?: string | number): number {
 function computeScoreAndResult(type: string, answersNumeric: number[]) {
   const total = answersNumeric.reduce((a, b) => a + b, 0);
 
-  if (type === 'PHQ-9') {
-    // Rangos PHQ-9: 0–4 ninguno; 5–9 leve; 10–14 moderado; 15–19 moderadamente severo; 20–27 severo
-    let result = 'none';
-    if (total >= 5 && total <= 9) result = 'mild';
-    else if (total >= 10 && total <= 14) result = 'moderate';
-    else if (total >= 15 && total <= 19) result = 'moderately severe';
-    else if (total >= 20) result = 'severe';
-    return { score: total, result };
-  }
+  // if (type === 'PHQ-9') {
+  //   // Rangos PHQ-9: 0–4 ninguno; 5–9 leve; 10–14 moderado; 15–19 moderadamente severo; 20–27 severo
+  //   let result = 'none';
+  //   if (total >= 5 && total <= 9) result = 'mild';
+  //   else if (total >= 10 && total <= 14) result = 'moderate';
+  //   else if (total >= 15 && total <= 19) result = 'moderately severe';
+  //   else if (total >= 20) result = 'severe';
+  //   return { score: total, result };
+  // }
 
-  if (type === 'GAD-7') {
-    // Rangos GAD-7: 0–4 mínimo; 5–9 leve; 10–14 moderado; 15–21 severo
-    let result = 'minimal';
-    if (total >= 5 && total <= 9) result = 'mild';
-    else if (total >= 10 && total <= 14) result = 'moderate';
-    else if (total >= 15) result = 'severe';
-    return { score: total, result };
-  }
+  // if (type === 'GAD-7') {
+  //   // Rangos GAD-7: 0–4 mínimo; 5–9 leve; 10–14 moderado; 15–21 severo
+  //   let result = 'minimal';
+  //   if (total >= 5 && total <= 9) result = 'mild';
+  //   else if (total >= 10 && total <= 14) result = 'moderate';
+  //   else if (total >= 15) result = 'severe';
+  //   return { score: total, result };
+  // }
 
   // Default: suma simple
   return { score: total, result: 'n/a' };
@@ -56,6 +57,7 @@ export class EvaluationsService {
     @InjectRepository(Evaluation) private readonly evalRepo: Repository<Evaluation>,
     @InjectRepository(EvaluationQuestion) private readonly qRepo: Repository<EvaluationQuestion>,
     @InjectRepository(User) private readonly userRepo: Repository<User>,
+    @InjectRepository(EvaluationsBase) private readonly evaluationsBase: Repository<EvaluationsBase>
   ) {}
 
   /** Crear evaluación con preguntas */
@@ -190,5 +192,14 @@ export class EvaluationsService {
     }));
 
     return { userId, summary };
+  }
+
+  async getEvaluationsBaseAll() {
+    const evaluations = await this.evaluationsBase.find(
+      {
+      relations: ['questions'], // Nombre del OneToMany en la entidad
+    }
+    );
+    return evaluations;
   }
 }

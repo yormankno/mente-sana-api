@@ -46,4 +46,9 @@ export class EvaluationsController {
   summary(@Param('userId', ParseIntPipe) userId: number) {
     return this.service.summary(userId);
   }
+
+  @Get('base/all')
+  getEvaluationsBaseAll(){
+    return this.service.getEvaluationsBaseAll();
+  }
 }

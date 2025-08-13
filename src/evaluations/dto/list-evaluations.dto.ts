@@ -5,7 +5,7 @@ export class ListEvaluationsDto {
   userId?: number;
 
   @IsOptional() @IsString()
-  @IsIn(['PHQ-9', 'GAD-7'])
+  // @IsIn(['PHQ-9', 'GAD-7'])
   type?: string;
 
   @IsOptional() @IsDateString()

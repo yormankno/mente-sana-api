@@ -16,7 +16,7 @@ export class CreateEvaluationDto {
   userId: number;
 
   @IsString()
-  @IsIn(['PHQ-9', 'GAD-7']) // agrega aquí más escalas que soportes
+  // @IsIn(['PHQ-9', 'GAD-7']) // agrega aquí más escalas que soportes
   type: string;
 
   @IsArray()
