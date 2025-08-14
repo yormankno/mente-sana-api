@@ -11,8 +11,10 @@ export class NotificationsController {
 
   // Crear notificación
   @Post()
-  create(@Body() dto: CreateNotificationDto) {
-    return this.service.create(dto);
+  async create(@Body() dto: CreateNotificationDto) {
+    const noti = await this.service.create(dto);
+    await this.service.sendAllNotifications(noti.title, noti.message);
+    return noti
   }
 
   // Listar (con filtros/paginación)
@@ -63,5 +65,10 @@ export class NotificationsController {
   @Patch('user/:userId/read-all')
   markAllAsRead(@Param('userId', ParseIntPipe) userId: number) {
     return this.service.markAllAsReadForUser(userId);
+  }
+
+  @Post('send/all')
+  sendAllNotifications() {
+    return this.service.sendAllNotifications("mensaje de prueba", "asunto de prueba");
   }
 }

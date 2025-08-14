@@ -7,13 +7,16 @@ import { CreateNotificationDto } from './dto/create-notification.dto';
 import { UpdateNotificationDto } from './dto/update-notification.dto';
 import { ListNotificationsDto } from './dto/list-notifications.dto';
 import { MarkManyDto } from './dto/mark-many.dto';
+import { MailService } from 'src/mail/mail.service';
+
 
 @Injectable()
 export class NotificationsService {
   constructor(
     @InjectRepository(Notification) private readonly notifRepo: Repository<Notification>,
     @InjectRepository(User) private readonly userRepo: Repository<User>,
-  ) {}
+    private readonly mailService: MailService,
+  ) { }
 
   async create(dto: CreateNotificationDto) {
     const user = await this.userRepo.findOne({ where: { id: dto.userId } });
@@ -117,4 +120,21 @@ export class NotificationsService {
 
     return { updated: result.affected ?? 0 };
   }
+
+  async sendAllNotifications(text : string, description: string) {
+
+    const user = await this.userRepo.find()
+    if (!user) throw new Error('Usuario no encontrado');
+    
+    for (const recipient of user) {
+      console.log("EMAIL: ",recipient.email);
+      await this.mailService.sendMail(
+        recipient.email,
+        text,
+        `<p>${description}</p>`,
+      );
+    }
+
+  }
+
 }
