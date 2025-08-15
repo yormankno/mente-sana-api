@@ -2,10 +2,11 @@ import { Controller, Get, Post, Body, Param, Put, Delete, Query, ParseIntPipe } 
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update.user.dto';
+import { LoginDto } from './entities/login.dto';
 
 @Controller('users')
 export class UsersController {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(private readonly usersService: UsersService) { }
 
   @Post()
   create(@Body() dto: CreateUserDto) {
@@ -33,5 +34,10 @@ export class UsersController {
   @Delete(':id')
   remove(@Param('id', ParseIntPipe) id: number) {
     return this.usersService.remove(id);
+  }
+
+  @Post('login')
+  login(@Body() dto: LoginDto) {
+    return this.usersService.login(dto);
   }
 }
