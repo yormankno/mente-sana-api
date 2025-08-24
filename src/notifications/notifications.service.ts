@@ -224,3 +224,16 @@ export class NotificationsService {
   }
 
 }
+
+// MN-10: Notificaciones
+// MN-11: Recordatorio hidratación
+// MN-12: Recordatorio actividad social
+// MN-13: Recordatorio ejercicios de relajación
+// MN-14: Recordatorio descanso
+// MN-15: Recordatorio descanso ocular
+// MN-16: Consejos de autocuidado
+// MN-17: Frases motivacionales
+// MN-18: Crear notificaciones
+// MN-19: Editar notificaciones
+// MN-20: Borrar notificaciones
+// MN-21: Listar notificaciones

@@ -103,3 +103,10 @@ export class ContentService {
     return { inserted: saved.length, data: saved };
   }
 }
+
+// MN-45: Búsqueda de sugerencias de películas
+// MN-46: Listas de reproducción
+// MN-47: Crear sugerencias de películas
+// MN-48: Listar sugerencias de entretenimiento
+// MN-49: Editar sugerencias
+// MN-50: Eliminar sugerencias

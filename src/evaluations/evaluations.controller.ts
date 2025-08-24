@@ -51,4 +51,13 @@ export class EvaluationsController {
   getEvaluationsBaseAll(){
     return this.service.getEvaluationsBaseAll();
   }
+
+  // MN-22: Evaluación Diagnóstico e Intervención
+  // MN-23: Evaluación de ansiedad
+  // MN-24: Evaluación de depresión
+  // MN-25: Evaluación de bienestar
+  // MN-26: Evaluación de apoyo social
+  // MN-27: Mandar puntaje de evaluación
+  // MN-28: Mandar resultado de evaluación
+  // MN-29: Frases motivadoras
 }

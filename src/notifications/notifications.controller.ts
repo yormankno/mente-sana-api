@@ -9,7 +9,7 @@ import { MarkManyDto } from './dto/mark-many.dto';
 export class NotificationsController {
   constructor(private readonly service: NotificationsService) {}
 
-  // Crear notificación
+  // MN-18: Crear notificaciones
   @Post()
   async create(@Body() dto: CreateNotificationDto) {
     const noti = await this.service.create(dto);
@@ -17,25 +17,25 @@ export class NotificationsController {
     return noti
   }
 
-  // Listar (con filtros/paginación)
+  // MN-21: Listar notificaciones
   @Get()
   findAll(@Query() query: ListNotificationsDto) {
     return this.service.findAll(query);
   }
-
-  // Obtener una
+  
+  // MN-12: Recordatorio actividad social
   @Get(':id')
   findOne(@Param('id', ParseIntPipe) id: number) {
     return this.service.findOne(id);
   }
 
-  // Actualizar título/mensaje
+  // MN-19: Editar notificaciones
   @Put(':id')
   update(@Param('id', ParseIntPipe) id: number, @Body() dto: UpdateNotificationDto) {
     return this.service.update(id, dto);
   }
 
-  // Eliminar
+  // MN-20: Borrar notificaciones
   @Delete(':id')
   remove(@Param('id', ParseIntPipe) id: number) {
     return this.service.remove(id);
@@ -72,3 +72,16 @@ export class NotificationsController {
     return this.service.sendAllNotifications("mensaje de prueba", "asunto de prueba");
   }
 }
+
+// MN-10: Notificaciones
+// MN-11: Recordatorio hidratación
+// MN-12: Recordatorio actividad social
+// MN-13: Recordatorio ejercicios de relajación
+// MN-14: Recordatorio descanso
+// MN-15: Recordatorio descanso ocular
+// MN-16: Consejos de autocuidado
+// MN-17: Frases motivacionales
+// MN-18: Crear notificaciones
+// MN-19: Editar notificaciones
+// MN-20: Borrar notificaciones
+// MN-21: Listar notificaciones

@@ -90,3 +90,12 @@ export class UsersService {
 
   }
 }
+
+// MN-1: Gestión de Usuarios
+// MN-2: Login de usuario
+// MN-3: Creación de perfil de usuario
+// MN-4: Creación de perfil de especialista
+// MN-5: Login de profesional
+// MN-6: Edición de perfil de usuario
+// MN-7: Edición de perfil de profesional
+// MN-9: Obtener todos los usuarios

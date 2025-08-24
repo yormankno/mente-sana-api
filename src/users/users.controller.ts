@@ -8,12 +8,20 @@ import { LoginDto } from './entities/login.dto';
 export class UsersController {
   constructor(private readonly usersService: UsersService) { }
 
-  @Post()
+  @Post() // MN-3: Creación de perfil de usuario
   create(@Body() dto: CreateUserDto) {
     return this.usersService.create(dto);
   }
 
-  @Get()
+  // MN-1: Gestión de Usuarios
+  // MN-2: Login de usuario
+  // MN-3: Creación de perfil de usuario
+  // MN-4: Creación de perfil de especialista
+  // MN-5: Login de profesional
+  // MN-6: Edición de perfil de usuario
+  // MN-7: Edición de perfil de profesional
+  // MN-9: Obtener todos los usuarios
+  @Get() // MN-9: Obtener todos los usuarios
   findAll(
     @Query('page') page = '1',
     @Query('limit') limit = '20',
@@ -21,22 +29,22 @@ export class UsersController {
     return this.usersService.findAll(Number(page), Number(limit));
   }
 
-  @Get(':id')
+  @Get(':id') // REQ: MN-4 
   findOne(@Param('id', ParseIntPipe) id: number) {
     return this.usersService.findOne(id);
   }
 
-  @Put(':id')
+  @Put(':id') // MN-7: Edición de perfil de profesional
   update(@Param('id', ParseIntPipe) id: number, @Body() dto: UpdateUserDto) {
     return this.usersService.update(id, dto);
   }
 
-  @Delete(':id')
+  @Delete(':id') // REQ: MN-6
   remove(@Param('id', ParseIntPipe) id: number) {
     return this.usersService.remove(id);
   }
 
-  @Post('login')
+  @Post('login') // MN-2: Login de usuario
   login(@Body() dto: LoginDto) {
     return this.usersService.login(dto);
   }

@@ -2,6 +2,8 @@ import { Injectable } from '@nestjs/common';
 import * as nodemailer from 'nodemailer';
 import 'dotenv/config';
 
+// MN-30: Documentación (servicio de envío de correo)
+
 @Injectable()
 export class MailService {
   private transporter;
